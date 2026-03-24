@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Лабиринт на избора</title>
+
+<style>
+
+body {
+font-family: Arial;
+text-align: center;
+background: #f0f2f5;
+}
+
+.container {
+margin-top: 100px;
+}
+
+button {
+padding: 12px 25px;
+margin: 10px;
+font-size: 18px;
+cursor: pointer;
+}
+
+#question {
+font-size: 22px;
+margin-bottom: 20px;
+}
+
+#progress {
+margin-bottom: 20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Лабиринт на избора</h1>
+
+<div id="progress"></div>
+
+<div id="question"></div>
+
+<button onclick="answer(true)">За</button>
+<button onclick="answer(false)">Против</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+
+const questions = [
+
+"Трябва ли да защитим децата си със всички мерки от злонамерени лица?",
+
+"Трябва ли да подобрим семейната среда и да запазим нейните ценности?",
+
+"Да защитим ли работните места приоритетно за българските граждани?",
+
+"Съгласни ли сте да взимаме още държавни кредити?",
+
+"Искате ли да има повече референдуми за важни въпроси?",
+
+"Какво мислите за Зелената сделка?"
+
+];
+
+let currentQuestion = 0;
+
+let score = 0;
+
+showQuestion();
+
+function showQuestion() {
+
+if(currentQuestion < questions.length) {
+
+document.getElementById("question").innerText =
+questions[currentQuestion];
+
+document.getElementById("progress").innerText =
+"Въпрос " + (currentQuestion+1) + " от " + questions.length;
+
+}
+
+else {
+
+showResult();
+
+}
+
+}
+
+function answer(isPositive) {
+
+if(currentQuestion == 3 || currentQuestion == 5) {
+
+if(!isPositive) score++;
+
+}
+
+else {
+
+if(isPositive) score++;
+
+}
+
+currentQuestion++;
+
+showQuestion();
+
+}
+
+function showResult() {
+
+document.getElementById("question").innerHTML = "";
+
+document.getElementById("progress").innerHTML = "";
+
+if(score >= 4) {
+
+document.getElementById("result").innerHTML =
+
+"<h2>Вашият избор е ИТН</h2>" +
+
+"<img src='logo.png' width='180'>";
+
+}
+
+else {
+
+document.getElementById("result").innerHTML =
+
+"<h2>Вашите отговори показват различна позиция.</h2>";
+
+}
+
+}
+
+</script>
+
+</body>
+
+</html>
