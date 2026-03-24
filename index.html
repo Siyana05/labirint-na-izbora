@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Лабиринт на избора</title>
+
+<style>
+
+body {
+
+background-color: #0b3d91;
+
+color: white;
+
+font-family: Arial;
+
+text-align: center;
+
+}
+
+.grid {
+
+display: grid;
+
+grid-template-columns: repeat(3, 120px);
+
+gap: 10px;
+
+justify-content: center;
+
+margin-top: 50px;
+
+}
+
+.cell {
+
+width: 120px;
+
+height: 120px;
+
+background: white;
+
+color: black;
+
+display: flex;
+
+align-items: center;
+
+justify-content: center;
+
+cursor: pointer;
+
+font-weight: bold;
+
+border-radius: 10px;
+
+}
+
+.visited {
+
+background: green;
+
+color: white;
+
+}
+
+button {
+
+padding: 12px 20px;
+
+margin: 10px;
+
+font-size: 18px;
+
+cursor: pointer;
+
+}
+
+#questionBox {
+
+margin-top: 30px;
+
+font-size: 22px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<img src="logo.png" width="160">
+<h1>Премини през лабиринта на избора</h1>
+
+<div class="grid">
+
+<div class="cell" onclick="askQuestion(0)">Стъпка 1</div>
+
+<div class="cell" onclick="askQuestion(1)">Стъпка 2</div>
+
+<div class="cell" onclick="askQuestion(2)">Стъпка 3</div>
+
+<div class="cell" onclick="askQuestion(3)">Стъпка 4</div>
+
+<div class="cell" onclick="askQuestion(4)">Стъпка 5</div>
+
+<div class="cell" onclick="askQuestion(5)">Стъпка 6</div>
+
+</div>
+
+<div id="questionBox"></div>
+
+<div id="buttons"></div>
+
+<div id="result"></div>
+
+<script>
+
+const questions = [
+
+"Трябва ли да защитим децата със всички мерки?",
+
+"Трябва ли да подобрим семейната среда?",
+
+"Да защитим ли работните места за българските граждани?",
+
+"Съгласни ли сте да взимаме още държавни кредити?",
+
+"Искате ли повече референдуми?",
+
+"Какво мислите за Зелената сделка?"
+
+];
+
+// правилните отговори
+
+const correctAnswers = [
+
+"ДА",
+
+"ДА",
+
+"ДА",
+
+"НЕ",
+
+"ДА",
+
+"НЕ ПРИЕМАМ"
+
+];
+
+let mistakes = 0;
+
+let answered = [false,false,false,false,false,false];
+
+function askQuestion(index) {
+
+document.getElementById("questionBox").innerText =
+
+questions[index];
+
+if(index == 5){
+
+document.getElementById("buttons").innerHTML =
+
+"<button onclick='answer(\"ПРИЕМАМ\","+index+")'>Приемам</button>" +
+
+"<button onclick='answer(\"НЕ ПРИЕМАМ\","+index+")'>Не приемам</button>";
+
+}
+
+else{
+
+document.getElementById("buttons").innerHTML =
+
+"<button onclick='answer(\"ДА\","+index+")'>Да</button>" +
+
+"<button onclick='answer(\"НЕ\","+index+")'>Не</button>";
+
+}
+
+}
+
+function answer(userAnswer,index) {
+
+if(answered[index]) return;
+
+answered[index] = true;
+
+if(userAnswer != correctAnswers[index]){
+
+mistakes++;
+
+}
+
+document.getElementsByClassName("cell")[index]
+
+.classList.add("visited");
+
+checkFinish();
+
+}
+
+function checkFinish(){
+
+let finished = answered.every(v => v === true);
+
+if(finished){
+
+showResult();
+
+}
+
+}
+
+function showResult(){
+
+document.getElementById("questionBox").innerHTML="";
+
+document.getElementById("buttons").innerHTML="";
+
+if(mistakes <= 2){
+
+document.getElementById("result").innerHTML =
+
+"<h2>Вашият избор е ИТН</h2>" +
+
+"<img src='logo.png' width='180'><br><br>" +
+
+"<img src='final.png' width='300'>";
+
+}
+
+document.getElementById("result").innerHTML =
+
+"<h2>Вашият избор е ИТН</h2>" +
+
+"<img src='logo.png' width='180'>";
+}
+
+else {
+
+document.getElementById("result").innerHTML =
+
+"<h2>Вашият избор е различен</h2>";
+
+}
+
+
+</script>
+
+</body>
+
+</html>
